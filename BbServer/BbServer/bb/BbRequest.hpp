@@ -1,7 +1,7 @@
 #pragma once
 
 
-#include "StringUtils.hpp"
+#include "BbStringUtils.hpp"
 
 
 #include <iostream>
@@ -28,15 +28,15 @@ public:
 public:
 	void parserRequest(string& requestData)
 	{
-		deque<string> dataList = StringUtils::splitString(requestData, "\n");
+		deque<string> dataList = BbStringUtils::splitString(requestData, "\n");
 		if (dataList[0][dataList[0].length() - 1] == '\r')
 		{
-			dataList = StringUtils::splitString(requestData, "\r\n");
+			dataList = BbStringUtils::splitString(requestData, "\r\n");
 		}
 		
-		m_method = StringUtils::getStringUseCharEnd(dataList[0], ' ');
-		m_path = "/" + StringUtils::getStringUseCharEnd(StringUtils::getStringUseCharStart(dataList[0], '/'), ' ');
-		m_version = StringUtils::splitStringGetOneStr(dataList[0], "/", 2);
+		m_method = BbStringUtils::getStringUseCharEnd(dataList[0], ' ');
+		m_path = "/" + BbStringUtils::getStringUseCharEnd(BbStringUtils::getStringUseCharStart(dataList[0], '/'), ' ');
+		m_version = BbStringUtils::splitStringGetOneStr(dataList[0], "/", 2);
 		setHeader(dataList);
 		setBody(requestData);
 	}
@@ -55,7 +55,7 @@ private:
 				break;
 			}
 
-			deque<string> tempDataList = StringUtils::splitString(dataList[i], ":");
+			deque<string> tempDataList = BbStringUtils::splitString(dataList[i], ":");
 			m_headerMap[tempDataList[0]] = tempDataList[1];
 		}
 	}

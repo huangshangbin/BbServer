@@ -1,6 +1,6 @@
 #pragma once
 
-#include "ByteStreamFile.hpp"
+#include "BbFile.hpp"
 
 
 #include <iostream>
@@ -51,7 +51,7 @@ public:
 
 	void replyFile(string filePath)//No matter what file, the browser will download it directly
 	{
-		string fileSuffix = StringUtils::splitStringGetOneStr(filePath, ".", 1);
+		string fileSuffix = BbStringUtils::splitStringGetOneStr(filePath, ".", 1);
 		if (fileSuffix == "")
 		{
 			m_status = 500;
@@ -65,7 +65,7 @@ public:
 			string fileName = getFileOrDirName(filePath);
 			m_headerMap["Content-Disposition"] = "attachment;filename=" + fileName;
 
-			ByteStreamFile responseFile(filePath);
+			BbFile responseFile(filePath);
 			m_headerMap["Content-Length"] = std::to_string(responseFile.getLength());
 
 			m_body.append(responseFile.getBuffer(), responseFile.getLength());
@@ -80,6 +80,16 @@ public:
 
 		m_body = "route error";
 		m_headerMap["Content-Length"] = std::to_string(m_body.size());
+	}
+
+	void replyNotSupportedMethond()
+	{
+		string promt = "request method not supported!";
+
+		m_headerMap["Content-Type"] = "text/plain";
+		m_headerMap["Content-Length"] = std::to_string(promt.size());
+
+		m_body = promt;
 	}
 
 
@@ -117,7 +127,7 @@ private:
 			}
 		}
 
-		string result = StringUtils::getStringUsePos(path, index + 1, path.length());
+		string result = BbStringUtils::getStringUsePos(path, index + 1, path.length());
 		return result;
 	}
 };

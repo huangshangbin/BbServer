@@ -154,8 +154,8 @@
     <ClInclude Include="bb\BbResponse.hpp" />
     <ClInclude Include="bb\BbServer.hpp" />
     <ClInclude Include="bb\BbService.hpp" />
-    <ClInclude Include="bb\ByteStreamFile.hpp" />
-    <ClInclude Include="bb\StringUtils.hpp" />
+    <ClInclude Include="bb\BbFile.hpp" />
+    <ClInclude Include="bb\BbStringUtils.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

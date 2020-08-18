@@ -78,7 +78,7 @@ public:
 		m_postPathFunMap[route] = routeFun;
 	}
 
-	void addService(BbService* service)
+	void injectService(BbService* service)
 	{
 		for (auto& pair : service->m_getPathFunMap)
 		{
@@ -263,7 +263,7 @@ private:
 
 	bool isCompletePostRequest(string& dataBuffer)
 	{
-		string body = StringUtils::splitStringGetOneStr(dataBuffer, "\r\n\r\n", 1);
+		string body = BbStringUtils::splitStringGetOneStr(dataBuffer, "\r\n\r\n", 1);
 		if (body.length() == getContentLength(dataBuffer))
 		{
 			return true;
@@ -288,9 +288,7 @@ private:
 			{
 				m_getPathFunMap[bbRequest.m_path](bbRequest, bbResponse);
 			}
-		}
-
-		if (bbRequest.m_method == "POST")
+		}else if (bbRequest.m_method == "POST")
 		{
 			if (m_postPathFunMap.find(bbRequest.m_path) == m_postPathFunMap.end())//path does not exist
 			{
@@ -300,6 +298,10 @@ private:
 			{
 				m_postPathFunMap[bbRequest.m_path](bbRequest, bbResponse);
 			}
+		}
+		else
+		{
+			bbResponse.replyNotSupportedMethond();
 		}
 	}
 

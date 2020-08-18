@@ -5,7 +5,7 @@
 #include <iostream>
 using namespace std;
 
-class ByteStreamFile
+class BbFile
 {
 private:
 	char* m_buffer;
@@ -13,7 +13,7 @@ private:
 
 
 public:
-	ByteStreamFile(string filePath)
+	BbFile(string filePath)
 	{
 		ifstream inFileStream(filePath, std::ios::binary);
 
@@ -27,7 +27,7 @@ public:
 		inFileStream.close();
 	}
 
-	~ByteStreamFile()
+	~BbFile()
 	{
 		if (m_buffer != nullptr)
 		{
@@ -56,6 +56,6 @@ public:
 	}
 
 private:
-	ByteStreamFile(const ByteStreamFile& byteStreamFile) {}
-	void operator = (const ByteStreamFile& byteStreamFile) {}
+	BbFile(const BbFile& bbFile) {}
+	void operator = (const BbFile& bbFile) {}
 };

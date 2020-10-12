@@ -2,6 +2,7 @@
 
 
 #include <bb/utils/BbStringUtils.hpp>
+#include <bb/utils/BbPathUtils.hpp>
 
 
 #include <iostream>
@@ -21,6 +22,7 @@ public:
 	string m_version;
 
 	map<string, string> m_headerMap;
+	map<string, string> m_pathParam;
 
 	string m_body;
 

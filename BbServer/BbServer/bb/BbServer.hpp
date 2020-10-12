@@ -343,6 +343,10 @@ private:
 		string lengthStr = requestStream.substr(lengthStartIndex, legthEndIndex - lengthStartIndex + 1);
 		return atol(lengthStr.c_str());
 	}
+
+//bbPathFunDeal
+private:
+
 };
 
 

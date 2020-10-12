@@ -71,7 +71,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>E:\project\c++\github\myProject\BbServer\BbServer\BbServer;$(IncludePath)</IncludePath>
+    <IncludePath>$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -156,6 +156,7 @@
     <ClInclude Include="bb\BbServer.hpp" />
     <ClInclude Include="bb\BbService.hpp" />
     <ClInclude Include="bb\utils\BbFile.hpp" />
+    <ClInclude Include="bb\utils\BbPathUtils.hpp" />
     <ClInclude Include="bb\utils\BbStringUtils.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

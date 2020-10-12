@@ -19,7 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{11466A02-E2C1-4349-B6D0-240A2A6E1EED}</ProjectGuid>
+    <ProjectGuid>{2E54D9BB-61BD-456A-9BB4-7A2B7D548EDB}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>BbServer</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
@@ -42,7 +42,7 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -71,11 +71,10 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>E:\project\c++\win32\BbServer\BbServer\BbServer;$(IncludePath)</IncludePath>
+    <IncludePath>E:\project\c++\github\myProject\BbServer\BbServer\BbServer;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -157,6 +156,7 @@
     <ClInclude Include="bb\BbService.hpp" />
     <ClInclude Include="bb\utils\BbFile.hpp" />
     <ClInclude Include="bb\utils\BbPathUtils.hpp" />
+    <ClInclude Include="bb\utils\BbRequestUtils.hpp" />
     <ClInclude Include="bb\utils\BbStringUtils.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

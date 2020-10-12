@@ -7,8 +7,29 @@
 #include <map>
 using namespace std;
 
+using BbPathFun = std::function<void(BbRequest& request, BbResponse& response)>;
+
 class BbPathUtils
 {
+public:
+	static string getBindPath(map<string, BbPathFun>& pathFunMap, string path)
+	{
+		if (pathFunMap.find(path) != pathFunMap.end())
+		{
+			return path;
+		}
+
+		for (auto& it : pathFunMap)
+		{
+			if (isMatch(path, it.first))
+			{
+				return it.first;
+			}
+		}
+
+		return "";
+	}
+
 public:
 	static bool isMatch(string path, string restfulPath)
 	{

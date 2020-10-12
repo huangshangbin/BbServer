@@ -1,7 +1,7 @@
 #pragma once
 
 
-using BbPathFun = std::function<void(BbRequest& request, BbResponse& response)>;
+#include <bb/utils/BbPathUtils.hpp>
 
 class BbService
 {

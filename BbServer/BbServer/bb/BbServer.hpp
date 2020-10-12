@@ -1,28 +1,17 @@
 #pragma once
 
-
-
-
-#include <iostream>
-#include <string>
-#include <deque>
-#include <map>
-
 #include <atomic>
 #include <thread>
 
 #pragma comment(lib, "ws2_32.lib")
 #include <WinSock2.h>
 
-using namespace std;
-
-#define BB_BUFFER_SIZE 1024
-
-
-
 #include "BbRequest.hpp"
 #include "BbResponse.hpp"
 #include "BbService.hpp"
+#include <bb/utils/BbRequestUtils.hpp>
+
+#define BB_BUFFER_SIZE 1024
 
 struct BbSocketData
 {
@@ -195,7 +184,7 @@ private:
 					}
 
 					bbSocketData->m_totalBuffer.append(bbSocketData->m_wsaBuffer.buf, receiveByteSize);
-					if ((receiveByteSize < BB_BUFFER_SIZE) || this->isCompleteData(bbSocketData->m_totalBuffer))
+					if ((receiveByteSize < BB_BUFFER_SIZE) || BbRequestUtils::isCompleteData(bbSocketData->m_totalBuffer))
 					{
 						string response;
 						this->handle(bbSocketData->m_totalBuffer, response);
@@ -218,21 +207,6 @@ private:
 
 //createWorkerThread
 private:
-	bool isCompleteData(string& dataBuffer)
-	{
-		if (dataBuffer[0] == 'G')
-		{
-			return isCompleteGetRequest(dataBuffer);
-		}
-
-		if (dataBuffer[0] == 'P' && dataBuffer[1] == 'O')
-		{
-			return isCompletePostRequest(dataBuffer);
-		}
-
-		return true;
-	}
-
 	void handle(string& request, string& response)
 	{
 		BbRequest bbRequest;
@@ -243,60 +217,34 @@ private:
 		
 		bbResponse.generateResponse(response);
 	}
-
-
-//isCompleteData
-private:
-	bool isCompleteGetRequest(string& dataBuffer)
-	{
-		int length = dataBuffer.length();
-
-		if (dataBuffer[length - 1] == '\n' && dataBuffer[length - 2] == '\r' && dataBuffer[length - 3] == '\n')
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-	}
-
-	bool isCompletePostRequest(string& dataBuffer)
-	{
-		string body = BbStringUtils::splitStringGetOneStr(dataBuffer, "\r\n\r\n", 1);
-		if (body.length() == getContentLength(dataBuffer))
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-	}
-
+	
 //handle
 private:
 	void bbPathFunDeal(BbRequest& bbRequest, BbResponse& bbResponse)
 	{
 		if (bbRequest.m_method == "GET")
 		{
-			if (m_getPathFunMap.find(bbRequest.m_path) == m_getPathFunMap.end())//path does not exist
+			string bindPath = BbPathUtils::getBindPath(m_getPathFunMap, bbRequest.m_path);
+			if (bindPath == "")//path does not exist
 			{
 				bbResponse.replyPathNotExist();
 			}
 			else
 			{
-				m_getPathFunMap[bbRequest.m_path](bbRequest, bbResponse);
+				bbRequest.m_pathParam = BbPathUtils::getParam(bbRequest.m_path, bindPath);
+				m_getPathFunMap[bindPath](bbRequest, bbResponse);
 			}
 		}else if (bbRequest.m_method == "POST")
 		{
-			if (m_postPathFunMap.find(bbRequest.m_path) == m_postPathFunMap.end())//path does not exist
+			string bindPath = BbPathUtils::getBindPath(m_postPathFunMap, bbRequest.m_path);
+			if (bindPath == "")//path does not exist
 			{
 				bbResponse.replyPathNotExist();
 			}
 			else
 			{
-				m_postPathFunMap[bbRequest.m_path](bbRequest, bbResponse);
+				bbRequest.m_pathParam = BbPathUtils::getParam(bbRequest.m_path, bindPath);
+				m_postPathFunMap[bindPath](bbRequest, bbResponse);
 			}
 		}
 		else
@@ -304,49 +252,6 @@ private:
 			bbResponse.replyNotSupportedMethond();
 		}
 	}
-
-//isCompletePostRequest
-private:
-	long getContentLength(string& requestStream)
-	{
-		int hCharIndex = 0;
-		for (int i = 0; i < requestStream.length(); i++)
-		{
-			if (requestStream[i] == 'C' && requestStream[i + 1] == 'o' && requestStream[i + 7] == '-'
-				&& requestStream[i + 8] == 'L' && requestStream[i + 13] == 'h')
-			{
-				hCharIndex = i + 13;
-				break;
-			}
-		}
-
-		int lengthStartIndex = 0;
-		for (int i = hCharIndex; i < requestStream.length(); i++)
-		{
-			if (requestStream[i] != ' ' && requestStream[i] != ':')
-			{
-				lengthStartIndex = i;
-				break;
-			}
-		}
-
-		int legthEndIndex = 0;
-		for (int i = lengthStartIndex; i < requestStream.length(); i++)
-		{
-			if (requestStream[i] == '\r' || requestStream[i] == '\n')
-			{
-				legthEndIndex = i;
-				break;
-			}
-		}
-
-		string lengthStr = requestStream.substr(lengthStartIndex, legthEndIndex - lengthStartIndex + 1);
-		return atol(lengthStr.c_str());
-	}
-
-//bbPathFunDeal
-private:
-
 };
 
 

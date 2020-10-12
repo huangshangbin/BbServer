@@ -10,6 +10,7 @@ public:
 		bindGet("/json", TestService::json);
 		bindGet("/html", TestService::html);
 		bindGet("/downloadFile", TestService::downloadFile);
+		bindGet("/{name}/{age}", TestService::restfulPath);
 
 		bindPost("/post", TestService::post);
 	}
@@ -33,6 +34,17 @@ public:
 	static void downloadFile(BbRequest& request, BbResponse& response)
 	{
 		response.replyFile("E:\\test.lib");
+	}
+
+	static void restfulPath(BbRequest& request, BbResponse& response)
+	{
+		string text;
+		for (auto& it : request.m_pathParam)
+		{
+			text = text + it.first + ":" + it.second + "\n";
+		}
+
+		response.replyText(text);
 	}
 
 	static void post(BbRequest& request, BbResponse& response)
@@ -59,5 +71,4 @@ int main()
 	server.listen("127.0.0.1", 5000);
 
 	return 0;
-
 }

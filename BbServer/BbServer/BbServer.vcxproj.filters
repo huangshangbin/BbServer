@@ -32,10 +32,10 @@
     <ClInclude Include="bb\BbService.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="bb\BbFile.hpp">
+    <ClInclude Include="bb\utils\BbFile.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="bb\BbStringUtils.hpp">
+    <ClInclude Include="bb\utils\BbStringUtils.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

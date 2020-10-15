@@ -6,10 +6,10 @@
 #pragma comment(lib, "ws2_32.lib")
 #include <WinSock2.h>
 
-#include "BbRequest.hpp"
-#include "BbResponse.hpp"
+
 #include "BbService.hpp"
-#include <bb/utils/BbRequestUtils.hpp>
+#include "./utils/BbRequestUtils.hpp"
+
 
 #define BB_BUFFER_SIZE 1024
 

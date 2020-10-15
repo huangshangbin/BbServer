@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <bb/utils/BbPathUtils.hpp>
 
 class BbService

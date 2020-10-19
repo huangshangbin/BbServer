@@ -65,7 +65,7 @@ private:
 			if (requestStream[i] == 'C' && requestStream[i + 1] == 'o' && requestStream[i + 7] == '-'
 				&& requestStream[i + 8] == 'L' && requestStream[i + 13] == 'h')
 			{
-				hCharIndex = i + 13;
+				hCharIndex = i + 14;
 				break;
 			}
 		}

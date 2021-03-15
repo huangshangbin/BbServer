@@ -5,6 +5,8 @@
 #include "../BbRequest.hpp"
 #include "../BbResponse.hpp"
 
+#include <functional>
+
 
 using BbPathFun = std::function<void(BbRequest& request, BbResponse& response)>;
 

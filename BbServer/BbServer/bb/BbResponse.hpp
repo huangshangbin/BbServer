@@ -41,6 +41,14 @@ public:
 		m_body = jsonStr;
 	}
 
+	void replyBinary(string binaryStr)
+	{
+		m_headerMap["Content-Type"] = "application/octet-stream";
+		m_headerMap["Content-Length"] = std::to_string(binaryStr.size());
+
+		m_body = binaryStr;
+	}
+
 	void replyHtml(string htmlStr)
 	{
 		m_headerMap["Content-Type"] = "text/html";

@@ -184,7 +184,7 @@ private:
 					}
 
 					bbSocketData->m_totalBuffer.append(bbSocketData->m_wsaBuffer.buf, receiveByteSize);
-					if ((receiveByteSize < BB_BUFFER_SIZE) || BbRequestUtils::isCompleteData(bbSocketData->m_totalBuffer))
+					if (BbRequestUtils::isCompleteData(bbSocketData->m_totalBuffer))
 					{
 						string response;
 						this->handle(bbSocketData->m_totalBuffer, response);

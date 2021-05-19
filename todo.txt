@@ -1,0 +1,5 @@
+考虑:
+    1  没有主动断开链接，浏览器也不断开。测试socket链接情况。 查看端口。占用
+        在 ::send 后面加入断开链接的代码。 closesocket(bbSocketData->m_clientSocket);   delete bbSocketData;   continue;
+
+    2  BbRequest 添加请求的ip, 添加ip过滤，防止网络攻击。
